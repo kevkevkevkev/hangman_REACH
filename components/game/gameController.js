@@ -28,6 +28,7 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
   $scope.GameController.NO_GUESSES = 6; // TODO: Make this immutable
 
   $scope.GameController.userGuess = "";
+  $scope.GameController.errorMessage = "";
 
 
   /************************************************************
@@ -92,13 +93,14 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
 
     // Make sure the user entered a valid input
     if (guess.length > 1) {
-      console.log("Please guess only one letter at a time"); //TODO: Replace these with flags
+      $scope.GameController.errorMessage = "Please guess only one letter at a time";
     } else if (guess.length < 1) {
-      console.log("Please enter at least one letter");
+      $scope.GameController.errorMessage = "Please enter at least one letter";
     } else {
       if ($scope.GameController.hasBeenGuessed(guess)) {
-        console.log("You already guessed that letter");
+        $scope.GameController.errorMessage = "You already guessed that letter";
       } else {
+        $scope.GameController.errorMessage = "";
         // If valid input, check if guess correct
         $scope.GameController.checkGuess(guess);
         // Check if the game is over
