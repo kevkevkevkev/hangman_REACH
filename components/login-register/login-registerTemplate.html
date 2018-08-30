@@ -24,6 +24,7 @@
         <md-button type="button" class="login-btn" ng-model="loginBtn" ng-click="LoginRegisterController.login()">Login</md-button>
         <md-button type="button" class="login-btn" ng-model="registerBtn" ng-click="LoginRegisterController.switchToRegisterView()">Register</md-button>        
     </div>
+    <md-label class="login-error-msg">{{LoginRegisterController.errorMessage}}</md-label>
 </div>
 
 <md-content layout-padding="" ng-if="main.registerView">
@@ -64,5 +65,6 @@
                 <md-button type="submit" class="login-btn">Register Me</md-button>
             </div>
         </form>
+        <md-label class="login-error-msg">{{LoginRegisterController.errorMessage}}</md-label>
     </div>
 </md-content>

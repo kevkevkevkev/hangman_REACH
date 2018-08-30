@@ -1,6 +1,9 @@
 (function() {
 'use strict';
 
+/*
+ * Managers the drop down menu in the upper-right hand corner.
+ */
 hangmanApp.controller('OptionsMenuCtrl', OptionsMenuCtrl)
 
 

@@ -44,3 +44,7 @@
   	box-shadow: 0 1px #27496d;
   	transform: translateY(1px);
 }
+
+.login-error-msg {
+	color: red;
+}

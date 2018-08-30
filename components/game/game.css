@@ -45,6 +45,6 @@
 	flex-direction: column;
 }
 
-.error-msg {
+.input-error-msg {
 	color: red;
 }

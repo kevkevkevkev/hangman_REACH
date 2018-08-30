@@ -3,8 +3,8 @@
 /*
  * Manages a game of hangman
  */
-hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams', '$resource', '$location', '$mdDialog',
-  function ($scope, $rootScope, $routeParams, $resource, $location, $mdDialog) {
+hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams', '$resource', '$location',
+  function ($scope, $rootScope, $routeParams, $resource, $location) {
 
   $scope.GameController = {};
   $scope.GameController.gameIsOn = true;

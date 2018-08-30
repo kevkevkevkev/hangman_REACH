@@ -1,12 +1,11 @@
 'use strict';
 
 /*
- * Manages the main menu, which includes the options: 
- * 1) start a new game;
- * 2) view leaderboards;
+ * Manages the main menu, which displays the leaderboard and
+ * includes the option to start a new game.
  */
-hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams', '$resource', '$location', '$mdDialog',
-  function ($scope, $rootScope, $routeParams, $resource, $location, $mdDialog) {
+hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams', '$resource', '$location',
+  function ($scope, $rootScope, $routeParams, $resource, $location) {
 
   $scope.MenuController = {};
 
@@ -15,7 +14,6 @@ hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams',
    *******************/
 
   $scope.MenuController.startGame = function() {
-    console.log("startGame() called");
     $location.path("/game");
   };
 
@@ -40,8 +38,6 @@ hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams',
         console.log(err);
     });
   };
-
   $scope.MenuController.loadUsers();  
-
 }]);
 

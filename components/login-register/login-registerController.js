@@ -13,6 +13,7 @@ hangmanApp.controller('LoginRegisterController', ['$scope', '$rootScope', '$rout
     $scope.LoginRegisterController.confirmPasswordTextInput = "";
     $scope.LoginRegisterController.firstNameInput = "";
     $scope.LoginRegisterController.newRegisteredUser = [];
+    $scope.LoginRegisterController.errorMessage = "";
 
     $scope.LoginRegisterController.login = function() {
       console.log("Submitting login() request");
@@ -24,9 +25,11 @@ hangmanApp.controller('LoginRegisterController', ['$scope', '$rootScope', '$rout
       
       $scope.main.active_user = login_resource.save(login_data, function () {
         console.log("changing location path to /menu");
+        $scope.LoginRegisterController.errorMessage = "";
         // Broadcast that the user is logged in
         $rootScope.$broadcast("Logged In");
       }, function errorHandling(err) {
+          $scope.LoginRegisterController.errorMessage = err.data.message;
           console.log(err);
       });
     };
@@ -46,16 +49,19 @@ hangmanApp.controller('LoginRegisterController', ['$scope', '$rootScope', '$rout
         console.log("changing location path to /menu");
         $scope.LoginRegisterController.login();
       }, function errorHandling(err) {
+          $scope.LoginRegisterController.errorMessage = err.data;
           console.log(err);
       });
       console.log("Submitting register() request");
     };
 
     $scope.LoginRegisterController.switchToRegisterView = function() {
+      $scope.LoginRegisterController.errorMessage = "";
       $scope.main.registerView = true;
     };
 
     $scope.LoginRegisterController.switchToLoginView = function() {
+      $scope.LoginRegisterController.errorMessage = "";
       $scope.main.registerView = false;
     };    
   }]);
