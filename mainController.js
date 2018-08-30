@@ -21,7 +21,10 @@ hangmanApp.config(['$routeProvider',
             when('/game', {
                 templateUrl: 'components/game/gameTemplate.html',
                 controller: 'GameController'
-            }).            
+            }).
+            when('/user-profile', {
+                templateUrl: 'components/profile/profileTemplate.html'
+            }).
             otherwise({
                 redirectTo: '#'
             });
@@ -47,10 +50,6 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
         $scope.main.registerView = false;
         $scope.main.session = {};
         $scope.main.active_user = [];
-        $scope.main.current_group_id = ""; 
-        $scope.main.current_group = {};
-        $scope.main.user_groups = [];
-        $scope.main.test_string = "I hope these controllers can communicate";
 
         $scope.main.saveSession = function() {
 
@@ -64,12 +63,15 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
             });            
         }
 
+        // Bring the user to the main menu/leaderboard
+        $scope.main.toMenu = function() {
+            $location.path("/menu");
+        }
+
         /* This listener will execute the associated function when the user has 
          * successfully logged on––it will update the display values. */
         $scope.$on("Logged In", function () {
-            console.log("$scope.main.active_user = ", $scope.main.active_user);
-            $scope.main.current_group_id = "";
-            console.log("$scope.main.current_group_id = ", $scope.main.current_group_id);            
+            console.log("$scope.main.active_user = ", $scope.main.active_user);          
             $scope.main.noOneIsLoggedIn = false;
             // Save the current session in local storage
             $scope.main.saveSession();
@@ -104,7 +106,6 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
             $scope.main.active_user = [];
             localStorageService.clearAll();
             $scope.main.session = {};
-          
         });
 
         /* When the user first loads the webpage, if there is no session saved,
