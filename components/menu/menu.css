@@ -1,3 +1,10 @@
+.menu {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+  	justify-content: center;
+}
+
 .menu-btn {
 	color: #fff;
 	background-color: black;
@@ -13,4 +20,18 @@
 	background-color: #417cb8;
   	box-shadow: 0 1px #27496d;
   	transform: translateY(1px);
+}
+
+.leaderboard {
+	width: 500px;
+}
+
+.leaderboard-section.md-subheader {
+	color: white;
+	background: gray;
+}
+
+.user-score {
+	border-bottom-style: dotted;
+	border-bottom-width: thin;
 }

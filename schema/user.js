@@ -19,7 +19,9 @@ var userSchema = new mongoose.Schema({
     type: String,
     required: true
   	},
-  	hash: String,	// The password of the use
+    wins: {type: Number, default: 0}, // Number of user wins
+    losses: {type: Number, default: 0}, // Number of user losses
+  	hash: String,	// The password of the user
   	salt: String,
     date_time: {type: Date, default: Date.now} // The date and time when the user was added to the database
 });

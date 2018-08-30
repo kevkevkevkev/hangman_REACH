@@ -1,4 +1,15 @@
 <div class="menu">
 	<md-button class="menu-btn" ng-click="MenuController.startGame()">New Game</md-button>
-	<!-- <md-button class="menu-btn" ng-click="MenuController.viewLeaderboards()">View Leaderboards</md-button> -->
+	<div class="leaderboard">
+	  <md-list flex="">
+	      <md-subheader class="md-no-sticky leaderboard-section">Leaderboard</md-subheader>
+	      <md-list-item class="md-2-line" ng-repeat="user in MenuController.users">
+	        <div class="md-list-item-text user-score" layout="column">
+	          <h3>Player: {{ user.first_name }}</h3>
+	          <h4>Wins: {{ user.wins }}</h4>
+	          <h4>Losses: {{ user.losses }}</h4>
+	        </div>
+	      </md-list-item>
+	  </md-list>
+	</div>
 </div>

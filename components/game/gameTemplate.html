@@ -41,11 +41,14 @@
 		</form>
 	</div>
 
-	<div ng-if="!GameController.gameIsOn">
+	<div class="game-over" ng-if="!GameController.gameIsOn">
 		<md-label ng-if="GameController.playerWon">Congratulations, you won!</md-label>
-		<md-label ng-if="!GameController.playerWon">Sorry, you lost :(</md-label>
+		<md-label ng-if="!GameController.playerWon">Sorry, you lost. The word was "{{GameController.gameWord.text}}"</md-label>
 		<md-button class="play-again-btn" type="submit" ng-click="GameController.configureGame()">
 			Play again?
+		</md-button>
+		<md-button class="play-again-btn" type="submit" ng-click="GameController.toLeaderboard()">
+			Back to leaderboard
 		</md-button>
 	</div>
 

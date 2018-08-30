@@ -273,6 +273,88 @@ app.get('/game/get_word', function (request, response) {
     });
 });
 
+/*
+ * URL /game/update_score/:outcome - Update the session user's score after a game
+ */
+app.post('/game/update_score/:outcome', function (request, response) {
+
+    if (!request.session.email_address) {
+        response.status(401).send("No user logged in");
+        return;
+    }
+
+    var outcome = request.params.outcome;
+
+    console.log("Server: Updating user score with ", JSON.stringify(outcome));
+
+    // Retrieve the session user
+    User.findOne({_id: request.session.user._id}).exec(function(err, user) {
+        if (err) {
+            // Query returned an error.
+            response.status(400).send(JSON.stringify(err));
+            return;
+        }
+        if (!user) {
+            // If no user found, report an error.
+            response.status(400).send('Missing user');
+            return;
+        }
+
+        // Update the user wins or losses depending on whether they won
+        if (outcome==1) {
+            user.wins = user.wins+1;
+        }
+        if (outcome==0) {
+            user.losses = user.losses+1;
+        }
+        console.log("User updated: ", user);
+        user.save();
+    });
+});
+
+/***************
+ * Leaderboard *
+ ***************/
+
+/*
+ * URL /leaderboard/get_users - Retrieve all the users who have played
+ * at least one game 
+ */
+app.get('/leaderboard/get_users', function (request, response) {
+
+    console.log("Server received user retrieval request");
+
+    if (!request.session.email_address) {
+        response.status(401).send("No user logged in");
+        return;
+    }
+
+    // Get the users who have won or lost at least one game stored in the database
+    User.find({$or:[{wins: { $gt : 0}}, {losses: { $gt: 0}}]}).exec(function (err, users) {
+        if (err) {
+            // Query returned an error.
+            response.status(400).send(JSON.stringify(err));
+            return;
+        }
+        if (!users) {
+            response.status(400).send("Missing users");
+            return;
+        }
+        if (users.length === 0) {
+            // Query didn't return an error but didn't find the SchemaInfo object - This
+            // is also an internal error return.
+            var empty_array = [];
+            respnse.status(200).send(JSON.stringify(empty_array));
+            return;
+        }
+
+        // We got the object - create an array version of it in JSON
+        var usersArray = JSON.parse(JSON.stringify(users));
+        console.log('users', users);
+        response.end(JSON.stringify(users));
+    });        
+});
+
 
 /************************
  * Server Configuartion *

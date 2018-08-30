@@ -136,6 +136,7 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     $scope.GameController.allGuessedWordArray.push(guess);
   };
 
+  // Check if the user has already guessed that letter
   $scope.GameController.hasBeenGuessed = function(guess) {
     if ($scope.GameController.allGuessedWordArray.includes(guess)) {
       return true;
@@ -144,21 +145,40 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     }
   };
 
+  // Check if the game is over
   $scope.GameController.gameIsOver = function() {
     // Check if the player won
     if ($scope.GameController.correctGuesses == $scope.GameController.gameWordArray.length) {
       console.log("Congratulations! You won!");
+      $scope.GameController.updateScore(1);
       $scope.GameController.playerWon = true;
       return true;
     }
     // Check if the player lost
     if ($scope.GameController.guessesRemaining == 0) {
       console.log("Sorry, you lost :( ");
+      $scope.GameController.updateScore(0);
       $scope.GameController.playerWon = false;
       return true;
     }
     // Otherwise return false
     return false;
+  };
+
+  // Update the user's lifetime score
+  $scope.GameController.updateScore = function(outcome) {
+    console.log("Client: updating score with ", outcome);
+    var score_resource = $resource('/game/update_score/:outcome', {outcome: outcome});
+    score_resource.save({}, function() {
+      $scope.main.saveSession();
+    }, function errorHandling(err) {
+      console.log(err);
+    });
+  };
+
+  // Return to the leaderboard
+  $scope.GameController.toLeaderboard = function() {
+    $location.path("/menu");
   };
 
   $scope.GameController.configureGame();
