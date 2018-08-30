@@ -1,0 +1,16 @@
+.menu-btn {
+	color: #fff;
+	background-color: black;
+	border: none;
+  	outline: none;
+}
+
+.menu-btn:hover {
+	background-color: #417cb8
+}
+
+.menu-btn:active {
+	background-color: #417cb8;
+  	box-shadow: 0 1px #27496d;
+  	transform: translateY(1px);
+}

@@ -1,0 +1,41 @@
+.game-board {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+  	justify-content: center;
+}
+
+
+.game-image {
+	display: flex;
+	flex-direction: row;
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+}
+
+.game-info-words {
+	display: flex;
+	flex-direction: column;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 15px;
+}
+
+.play-again-btn {
+	color: #fff;
+	background-color: black;
+	border: none;
+  	outline: none;
+}
+
+.play-again-btn:hover {
+	background-color: #417cb8
+}
+
+.play-again-btn:active {
+	background-color: #417cb8;
+  	box-shadow: 0 1px #27496d;
+  	transform: translateY(1px);
+}

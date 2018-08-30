@@ -1,0 +1,52 @@
+<div class="game-board">
+
+	<p>This is a game of hangman</p>
+
+	<div class="game-image">
+		<div ng-if="GameController.guessesRemaining == 6">
+			<img src="img/hangman/0_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 5">
+			<img src="img/hangman/1_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 4">
+			<img src="img/hangman/2_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 3">
+			<img src="img/hangman/3_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 2">
+			<img src="img/hangman/4_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 1">
+			<img src="img/hangman/5_wrong.png">
+		</div>
+		<div ng-if="GameController.guessesRemaining == 0">
+			<img src="img/hangman/6_wrong.png">
+		</div>
+	</div>
+
+	<div class="game-info-words">
+		<md-label>Actual Word: {{GameController.gameWord.text}} </md-label>
+		<md-label>Word: {{GameController.guessedWordArray.join(" ")}} </md-label>
+		<md-label>Misses: {{GameController.incorrectGuessArray.join()}} </md-label>
+		<md-label>Guess: {{GameController.userGuess}} </md-label>
+	</div>
+
+	<div ng-if="GameController.gameIsOn">
+		<form ng-submit="GameController.guess()">
+			Guess a letter
+			<input type="text" ng-model="GameController.userGuess" />
+			<input type="submit" id="submit" value="Submit" />
+		</form>
+	</div>
+
+	<div ng-if="!GameController.gameIsOn">
+		<md-label ng-if="GameController.playerWon">Congratulations, you won!</md-label>
+		<md-label ng-if="!GameController.playerWon">Sorry, you lost :(</md-label>
+		<md-button class="play-again-btn" type="submit" ng-click="GameController.configureGame()">
+			Play again?
+		</md-button>
+	</div>
+
+</div>

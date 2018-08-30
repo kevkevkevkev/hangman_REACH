@@ -1,0 +1,68 @@
+<div class="login-container" ng-if="!main.registerView">
+    <form ng-submit="LoginRegisterController.login()" name="loginForm">
+        <div layout-gt-xs="row">
+            <md-input-container class="register-email_address-input" flex-gt-xs="">
+                <label>Email Address</label>
+                <input ng-model="LoginRegisterController.email_addressTextInput" required="">
+            </md-input-container>
+        </div>
+
+        <div layout-gt-xs="row">        
+            <md-input-container class="register-password-input" flex-gt-xs="">
+                <label>Password</label>
+                <input ng-model="LoginRegisterController.passwordTextInput" required="" type="password">
+                <div ng-messages="loginForm.LoginRegisterController.login().$error">
+                    <div ng-message="pattern">
+                        Incorrect password.
+                    </div>
+                </div>
+            </md-input-container>
+        </div>
+    </form>
+
+    <div class="login-register-buttons">
+        <md-button type="button" class="login-btn" ng-model="loginBtn" ng-click="LoginRegisterController.login()">Login</md-button>
+        <md-button type="button" class="login-btn" ng-model="registerBtn" ng-click="LoginRegisterController.switchToRegisterView()">Register</md-button>        
+    </div>
+</div>
+
+<md-content layout-padding="" ng-if="main.registerView">
+    <div>
+        <form name="registerForm" ng-submit="LoginRegisterController.register()">
+            <div layout-gt-xs="row">
+                <md-input-container class="register-email_address-input" flex-gt-xs="">
+                    <label>Email Address</label>
+                    <input ng-model="LoginRegisterController.email_addressTextInput" required="">
+                </md-input-container>
+
+                <md-input-container class="register-password-input" flex-gt-xs="">
+                    <label>Password</label>
+                    <input ng-model="LoginRegisterController.passwordTextInput" required="" type="password">
+                </md-input-container>
+
+                <md-input-container class="register-password-input" flex-gt-xs="">
+                    <label>Re-enter password</label>
+                    <input ng-model="LoginRegisterController.confirmPasswordTextInput" required="" type="password" ng-pattern="{{LoginRegisterController.passwordTextInput}}">
+                
+                    <div ng-messages="registerForm.LoginRegisterController.confirmPasswordTextInput.$error">
+                        <div ng-message="pattern">
+                            Confirmation does not match your password.
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div layout-gt-xs="row">
+                <md-input-container class="register-first-name-input" flex-gt-xs="">
+                    <label>Your nickname</label>
+                    <input ng-model="LoginRegisterController.firstNameInput" required="">
+                </md-input-container>
+            </div>
+            
+            <div>
+                <md-button type="button" class="login-btn" ng-click="LoginRegisterController.switchToLoginView()">Back</md-button>
+                <md-button type="submit" class="login-btn">Register Me</md-button>
+            </div>
+        </form>
+    </div>
+</md-content>

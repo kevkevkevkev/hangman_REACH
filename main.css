@@ -1,0 +1,78 @@
+.navbar {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom-width: 0;
+	border-width: 0;
+}
+
+.hangman-navbar {
+	padding: 10px 0;
+	background-color: black;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-radius: 0px !important;
+}
+
+.hangman-logo {
+	font-weight: 700 !important;
+	margin-left: 20px !important;
+	color: white !important;
+	font-size: 2em;
+}
+
+.navbar-right {
+	padding-right: 20px;
+	float: right;
+}
+
+.span10 {
+	left: 300px;
+}
+
+.nav-and-content {
+	margin-top: 0;
+	padding-top: 0;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+.content_display {
+	margin-top: 20px;
+	background-color: white;
+}
+
+.nav-tabs {
+	padding-top: 20px;
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    padding-bottom: 0;
+    margin-bottom: 0;
+	color: black;
+	text-decoration-color: black;
+}
+
+.nav-tabs > li.inactive > a {
+  	color: white !important;
+}
+
+.nav-tabs > li.active > a {
+  	color: black !important;
+  	cursor: pointer !important;
+}
+
+.nav-tabs > li.inactive > a:hover {
+  	color: black !important;
+}
+
+md-select.md-default-theme .md-select-icon, md-select .md-select-icon {
+    color: rgb(255, 255, 255);
+}
+
+md-select.md-default-theme .md-select-value, md-select .md-select-value {
+    border-bottom-color: rgba(255, 255, 255, .1);
+}
+
+group-dropdown > md-select.md-default-theme .md-select-value.md-select-placeholder, md-select .md-select-value.md-select-placeholder {
+	color: white;
+}
