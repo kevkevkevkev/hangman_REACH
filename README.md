@@ -45,7 +45,7 @@ I managed the hangman game logic on the front end because my implementation invo
 
 Because this implementation stores the game word locally, a committed user could find a way to hack the game. If I were to develop this project further, I could AB test an implementation where all the game logic is stored on the server and design tests to compare the performance.
 
-#### Session
+##### Session
 I used the Angular localStorageService package to save the user’s session locally. This way, the user can close the web application and return and remain logged in. If the user logs out, the localStorageService is cleared.
 
 #### 3) Database
@@ -63,9 +63,9 @@ I added three categories of extension:
 I used a combination of html, css, and angular components to create a GUI. I designed this GUI with the goals of:
 1. Making it clear to the user how to use the application. I aimed to design the application so a user with no prior knowledge could access the web-page, create an account, and start playing without needing to think about it.
 2. Making it impossible for the user to “make a mistake.” I aimed to ensure that there were no “dead ends” or paths that the user could not return from. For example, I made the logo in the upper left a link that the user can click on at any time to return to the main menu.
-3. Making it attractive. I used a simple color scheme (black, white, and grey) and applied a few precepts of Bauhaus design to try and make the application simple, clean, and attractive.
+3. Making it attractive. I used a simple color scheme (black, white, and grey) and used fonts to try and make the application simple, clean, and attractive.
 
-#### 1) Leaderboard
+#### 2) Leaderboard
 I implemented a leaderboard to display user scores. To do this, I added account login and registration functionality so the user can create an account that will persist across sessions.
 
 I added two properties to the user.js schema: wins and losses. To appear on the leaderboard, the user must have at least 1 win or 1 loss. The users are displayed on the leaderboard in rank order of their wins.
