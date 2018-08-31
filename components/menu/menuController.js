@@ -21,8 +21,12 @@ hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams',
    * Populate Leaderboard *
    ************************/
 
-   $scope.MenuController.users = [];
+  $scope.MenuController.users = [];
 
+  /**
+   * Loads all users who have played at least one game from
+   * the db via the server.
+   */
   $scope.MenuController.loadUsers = function() {
     var users_resource = $resource('/leaderboard/get_users');
     $scope.MenuController.users = users_resource.query({}, function() {
@@ -31,6 +35,7 @@ hangmanApp.controller('MenuController', ['$scope', '$rootScope', '$routeParams',
 			if (a !== b) {
 			  return (b.wins-a.wins);
 			} else {
+        // If users have the same wins, sort by when the account was created
 			  return a.date_time-b.date_time;
 			}
 		});

@@ -26,6 +26,18 @@ header h1 {
 }
 
 .jumbotron h3 {
+  margin: 0 0 10px;
+  color: #fff;
+}
+
+.jumbotron h4 {
+  font-size: 15px;
   margin: 0 0 20px;
   color: #fff;
 }
+
+/*.start-btn {
+  color: white;
+  background-color: gray;
+  border-color: black;
+}*/

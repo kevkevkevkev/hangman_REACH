@@ -25,31 +25,36 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
   // Define an integer for the number of correct guesses the user has made
   $scope.GameController.correctGuesses = 0;
   // Define the number of guesses the user will have in a game
-  $scope.GameController.NO_GUESSES = 6; // TODO: Make this immutable
-
+  $scope.GameController.NO_GUESSES = 6;
+  // A string to represent the user's guess input (for two way binding)
   $scope.GameController.userGuess = "";
+  // A string that will display error messages for invalid input (for two way binding)
   $scope.GameController.errorMessage = "";
 
 
-  /************************************************************
-   * Retrieve random word and configure other game parameters *
-   ************************************************************/
+  /***************
+   * Set up game *
+   ***************/
 
+  /**
+   * Called when the user starts a new game.
+   */
   $scope.GameController.configureGame = function() {
     console.log("Configuring game");
     $scope.GameController.getWord();
   };
 
-  $scope.GameController.getWord = function() {
-    console.log("getWord() called");
-    
+  /**
+   * Retrieves a random word and resets all game variables.
+   */
+  $scope.GameController.getWord = function() {    
     // Retrieve a word from the LinkedIn API via the server
     var word_resource = $resource('/game/get_word');
     $scope.GameController.gameWord = word_resource.get({}, function() {
-      console.log("Client: Retrieved word: ", $scope.GameController.gameWord.text);
-      console.log("Client: It's type is ", typeof $scope.GameController.gameWord.text);
+      // Note: Uncomment to see game word for easier testing
+      //console.log("Client: Retrieved word: ", $scope.GameController.gameWord.text);
 
-    //Get the length of the word
+    // Get the length of the word
     var wordLength = $scope.GameController.gameWord.text.length;
 
     // Populate an array that will hold the letters in the gameWord
@@ -58,7 +63,6 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
       gameWordArray[i] = $scope.GameController.gameWord.text.substring(i, i+1);
     }
     $scope.GameController.gameWordArray = gameWordArray;
-    console.log("Client: the gameWordArray is ", $scope.GameController.gameWordArray);
 
     // Populate an array with hyphens that will hold the letters the user has guessed correctly
     var guessedWordArray = new Array();
@@ -69,7 +73,6 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
 
     //Define an integer for the number of guesses the user has remaining
     $scope.GameController.guessesRemaining = $scope.GameController.NO_GUESSES;
-
     //Define an integer for the number of correct guesses the user has made
     $scope.GameController.correctGuesses = 0;
     // Initialize an array to hold all the user's guesses (both correct and incorrect)
@@ -84,6 +87,15 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     });
   };
 
+  /*****************
+   * Manage a game *
+   *****************/
+
+  /**
+   * Called when the user submits a guess, evaluates the user's
+   * guess input (from two-way binding) to determine if input is valid
+   * and whether the guess is correct.
+   */
   $scope.GameController.guess = function() {
     console.log("Client: guess() called");
     var guess = $scope.GameController.userGuess;
@@ -114,31 +126,38 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     $scope.GameController.userGuess = "";
   };
 
+  /**
+   * Evaluates a valid user input to determine if the guess is correct.
+   * @return true if guess correct
+   * @return false if guess incorrect
+   */
   $scope.GameController.checkGuess = function(guess) {
-    console.log("Client: checkGuess() called");
     var correctGuess = false;
 
+    // Determine if user's guess matches letters in the game word
     for (var i = 0; i < $scope.GameController.gameWordArray.length; i++) {
-      if ($scope.GameController.gameWordArray[i]==guess) { // TODO: This may be incorrect
+      if ($scope.GameController.gameWordArray[i]===guess) {
         correctGuess = true;
         $scope.GameController.guessedWordArray[i] = guess;
         $scope.GameController.correctGuesses = $scope.GameController.correctGuesses + 1;
       }
     }
 
-    if (correctGuess == true) {
-      console.log("You guessed correctly!");
-    } else {
+    // If the guess was incorrect, decrement the user's remaining guesses
+    if (correctGuess !== true) {
       $scope.GameController.guessesRemaining = $scope.GameController.guessesRemaining -1;
       $scope.GameController.incorrectGuessArray.push(guess);
-      console.log("You guessed incorrectly, sorry.");
     }
 
     // Add the guessed letter to the array of all guesses
     $scope.GameController.allGuessedWordArray.push(guess);
   };
 
-  // Check if the user has already guessed that letter
+  /**
+   * Evaluates the user's input to determine if the user has already guessed that letter.
+   * @return true if user has already guessed that letter
+   * @return false if user has not yet guessed that letter
+   */
   $scope.GameController.hasBeenGuessed = function(guess) {
     if ($scope.GameController.allGuessedWordArray.includes(guess)) {
       return true;
@@ -147,18 +166,20 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     }
   };
 
-  // Check if the game is over
+  /**
+   * Checks if the game is over.
+   * @return true if game over
+   * @return false if game not over
+   */
   $scope.GameController.gameIsOver = function() {
     // Check if the player won
     if ($scope.GameController.correctGuesses == $scope.GameController.gameWordArray.length) {
-      console.log("Congratulations! You won!");
       $scope.GameController.updateScore(1);
       $scope.GameController.playerWon = true;
       return true;
     }
     // Check if the player lost
     if ($scope.GameController.guessesRemaining == 0) {
-      console.log("Sorry, you lost :( ");
       $scope.GameController.updateScore(0);
       $scope.GameController.playerWon = false;
       return true;
@@ -167,9 +188,10 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     return false;
   };
 
-  // Update the user's lifetime score
+  /**
+   * Updates the user's lifetime score.
+   */
   $scope.GameController.updateScore = function(outcome) {
-    console.log("Client: updating score with ", outcome);
     var score_resource = $resource('/game/update_score/:outcome', {outcome: outcome});
     score_resource.save({}, function() {
       $scope.main.saveSession();
@@ -178,7 +200,9 @@ hangmanApp.controller('GameController', ['$scope', '$rootScope', '$routeParams',
     });
   };
 
-  // Return to the leaderboard
+  /**
+   * Returns to the leaderboard/main menu.
+   */
   $scope.GameController.toLeaderboard = function() {
     $location.path("/menu");
   };

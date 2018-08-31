@@ -84,11 +84,9 @@ PanelMenuCtrl.prototype.selectOption = function(option) {
 
   switch(option) {
   case "My Profile":
-    console.log("User clicked My Profile");
     this.$location.path("/user-profile");
     break;
   case "Logout":
-    console.log("User clicked Logout");
     this.$rootScope.$broadcast("Logout");            
   }
 };

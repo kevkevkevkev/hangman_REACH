@@ -56,7 +56,6 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
             // Save the current session in local storage
             var session_resource = $resource('/get-current-session');
             var current_session = session_resource.get({}, function () {
-                console.log("setting current_session to ", current_session);
                 localStorageService.set('session', current_session);
             }, function errorHandling(err) {
                 console.log(err);
@@ -70,8 +69,7 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
 
         /* This listener will execute the associated function when the user has 
          * successfully logged on––it will update the display values. */
-        $scope.$on("Logged In", function () {
-            console.log("$scope.main.active_user = ", $scope.main.active_user);          
+        $scope.$on("Logged In", function () {        
             $scope.main.noOneIsLoggedIn = false;
             // Save the current session in local storage
             $scope.main.saveSession();
@@ -80,7 +78,6 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
 
         /* When the user clicks logout, call the logout function */ 
         $scope.$on("Logout", function () {
-            console.log("Logout broadcast received");
             $location.path("/login-register");              
             $scope.main.logout();
         });        
@@ -101,7 +98,7 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
         /* When the user has logged out, this listener will return the user to
          * the login page. */ 
         $scope.$on("Logged Out", function () {
-            console.log("Logged Out broadcast received");
+            console.log("Logout successful");
             $scope.main.noOneIsLoggedIn = true;
             $scope.main.active_user = [];
             localStorageService.clearAll();
@@ -112,16 +109,12 @@ hangmanApp.controller('MainController', ['$scope', '$rootScope', '$location',
          * this listener will direct the user to the login page */
         $rootScope.$on( "$routeChangeStart", function(event, next, current) {
             //localStorageService.clearAll();
-            console.log("rootScope called");
           if ($scope.main.noOneIsLoggedIn) {
-            console.log("No one is logged in");
             // If session saved in local storage, restore session and direct to /menu
             if (localStorageService.get('session')) {
-                console.log("Session saved in localStorageService");
                 var session_resource = $resource('/restore-session');
                 var saved_session = localStorageService.get('session');
                 var restore_session_data = {email_address: saved_session.email_address};
-                console.log("restore_session_data", restore_session_data);
                 $scope.main.active_user = session_resource.save(restore_session_data, function () {
                     // Broadcast that the user is logged in
                     $rootScope.$broadcast("Logged In");
