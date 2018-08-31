@@ -24,14 +24,14 @@ Submitted by Kevin O’Connell for the LinkedIn REACH Coding Project.
 I built this application using the MEAN stack. In thinking about the decomposition for my implementation, I identified three categories:
 1. Handling retrieval of a random word from the LinkedIn REST API on the server
 2. Managing the hangman game logic on the front-end
-3. Storing information about the user's wins and losses in Mongobd. 
+3. Storing information about the user's wins and losses in MongoDB. 
 
 #### 1. Server
 
 ##### Word Retrieval
 I handled the retrieval of a random word on the server so there is a single point of access between my program and the LinkedIn API.
 
-In this implementation, the server queries the LinkedIn API every time the user starts a new game. This results in a slight delay in loading the game. If I were to develop this project further, I would explore how to periodically query the LinkedIn API (e.g., once a day) in case of updates, and store the words retrieved in Mongodb. I would also explore designing a word.js schema with properties to denote the “difficulty” level of each word.
+In this implementation, the server queries the LinkedIn API every time the user starts a new game. This results in a slight delay in loading the game. If I were to develop this project further, I would explore how to periodically query the LinkedIn API (e.g., once a day) in case of updates, and store the words retrieved in MongoDB. I would also explore designing a word.js schema with properties to denote the “difficulty” level of each word.
 
 ##### Login, Registration, and Session
 The server also handles login, registration, and the session. To create a persistent leaderboard, I wanted to offer users the ability to create an account that would keep track of their wins and losses. 
@@ -50,7 +50,7 @@ I used the Angular localStorageService package to save the user’s session loca
 
 #### 3. Database
 
-I used Mongodb to store information about the users and their scores. I did this because, to populate a leaderboard, the information on users' wins and losses needs to persist across sessions. 
+I used MongoDB to store information about the users and their scores. I did this because, to populate a leaderboard, the information on users' wins and losses needs to persist across sessions. 
 
 ## Extensions
 

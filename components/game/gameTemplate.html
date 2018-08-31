@@ -1,6 +1,8 @@
 <div class="game-board">
 
-	<p>Try to guess the word! You have {{GameController.guessesRemaining}} guesses remaining</p>
+	<div ng-if="GameController.gameIsOn">
+		<p>Try to guess the word! You have {{GameController.guessesRemaining}} guesses remaining</p>
+	</div>
 
 	<div class="game-image">
 		<div ng-if="GameController.guessesRemaining == 6">
